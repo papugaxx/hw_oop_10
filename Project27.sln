@@ -1,31 +1,114 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.11.35327.3
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project27", "Project27\Project27.vcxproj", "{D37CFA86-7D86-4C92-81FC-EF106FA51D43}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D37CFA86-7D86-4C92-81FC-EF106FA51D43}.Debug|x64.ActiveCfg = Debug|x64
-		{D37CFA86-7D86-4C92-81FC-EF106FA51D43}.Debug|x64.Build.0 = Debug|x64
-		{D37CFA86-7D86-4C92-81FC-EF106FA51D43}.Debug|x86.ActiveCfg = Debug|Win32
-		{D37CFA86-7D86-4C92-81FC-EF106FA51D43}.Debug|x86.Build.0 = Debug|Win32
-		{D37CFA86-7D86-4C92-81FC-EF106FA51D43}.Release|x64.ActiveCfg = Release|x64
-		{D37CFA86-7D86-4C92-81FC-EF106FA51D43}.Release|x64.Build.0 = Release|x64
-		{D37CFA86-7D86-4C92-81FC-EF106FA51D43}.Release|x86.ActiveCfg = Release|Win32
-		{D37CFA86-7D86-4C92-81FC-EF106FA51D43}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {37FE4942-06D7-4479-8E05-7AE925B8CF7B}
-	EndGlobalSection
-EndGlobal
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//1
+
+class Employer {
+public:
+    virtual void Print() const = 0;
+    virtual ~Employer() {}
+};
+
+class President : public Employer {
+public:
+    void Print() const override {
+        cout << "president" << endl;
+    }
+};
+
+class Manager : public Employer {
+public:
+    void Print() const override {
+        cout << "manager" << endl;
+    }
+};
+
+class Worker : public Employer {
+public:
+    void Print() const override {
+        cout << "worker" << endl;
+    }
+};
+
+int main() {
+    President president;
+    Manager manager;
+    Worker worker;
+
+    president.Print();
+    manager.Print();
+    worker.Print();
+
+    return 0;
+}
+
+//2
+
+class Shape {
+public:
+    virtual double Area() const = 0;
+    virtual ~Shape() {}
+};
+
+class Rectangle : public Shape {
+private:
+    double width, height;
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+    double Area() const override {
+        return width * height;
+    }
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+public:
+    Circle(double r) : radius(r) {}
+    double Area() const override {
+        return 3.14 * radius * radius;
+    }
+};
+
+class RightTriangle : public Shape {
+private:
+    double base, height;
+public:
+    RightTriangle(double b, double h) : base(b), height(h) {}
+    double Area() const override {
+        return 0.5 * base * height;
+    }
+};
+
+class Trapezoid : public Shape {
+private:
+    double base1, base2, height;
+public:
+    Trapezoid(double b1, double b2, double h) : base1(b1), base2(b2), height(h) {}
+    double Area() const override {
+        return 0.5 * (base1 + base2) * height;
+    }
+};
+
+int main() {
+    const int size = 4;
+    Shape* shapes[size];
+
+    shapes[0] = new Rectangle(5.0, 3.0);
+    shapes[1] = new Circle(4.0);
+    shapes[2] = new RightTriangle(3.0, 4.0);
+    shapes[3] = new Trapezoid(3.0, 5.0, 4.0);
+
+    for (int i = 0; i < size; ++i) {
+        cout << "area " << i + 1 << ": " << shapes[i]->Area() << endl;
+    }
+
+    for (int i = 0; i < size; ++i) {
+        delete shapes[i];
+    }
+
+    return 0;
+}
+
